@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Test application</title>
+</head>
+<body>
+<p>Test application</p>
+<script>
+function f(){
+var o = new ActiveXObject("ScreenReaderAPI.Interface");
+o.SapiLoad();
+for (var i=0, n=o.SapiGetNumVoices(); i<n; i++) {
+o.SapiSetVoice(i);
+o.SapiSayString(o.SapiGetVoiceName(i), true);
+o.SapiWait(-1);
+}}
+window.onload = f;
+</script>
+</body>
+</html>

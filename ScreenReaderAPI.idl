@@ -1,0 +1,85 @@
+// The IDL file for ScreenReaderAPI.DLL
+//
+// {4EB1B5DE-592E-4CBA-8230-D21D7456C38C} = Type library's GUID
+// {06C98751-54F6-433D-A751-D180789A854D} = IScreenReaderAPI object's GUID
+// {C0BC1432-993C-4D7B-A4BB-A42646226FA1} = IScreenReaderAPI VTable's GUID
+
+[uuid(4EB1B5DE-592E-4CBA-8230-D21D7456C38C), version(1.0), helpstring("Screen reader API COM Server")]
+library IScreenReaderApi
+{
+	importlib("STDOLE2.TLB");
+
+	[uuid(C0BC1432-993C-4D7B-A4BB-A42646226FA1), dual, oleautomation, hidden, nonextensible]
+	interface IScreenReaderApiVTbl : IDispatch
+	{
+		[helpstring("Speak the specified string using the currently active screen reader.")]
+[id(1)] VARIANT_BOOL SayString([in] BSTR stringToSpeak, [in, defaultvalue(1)] VARIANT_BOOL interrupt);
+		[helpstring("Immediately stop speaking.")]
+[id(2)] VARIANT_BOOL StopSpeech(void);
+		[helpstring("Force to use a particular screen reader.")]
+[id(3)] VARIANT_BOOL SetCurrentScreenReader(int screenReaderID);
+		[helpstring("Tell which screen reader is currently used.")]
+[id(4)] int GetCurrentScreenReader(void);
+		[helpstring("Enable or disable the use of SAPI5 if no screen reader is found.")]
+[id(5)] HRESULT SapiEnable([in, defaultvalue(1)] VARIANT_BOOL enable);
+		[helpstring("Tells if SAPI5 is used in case no screen reader is found or not.")]
+[id(6)] VARIANT_BOOL SapiIsEnabled(void);
+		[helpstring("Load the SAPI5 engine")]
+[id(7)] VARIANT_BOOL SapiLoad (void) ;
+		[helpstring("Unload the SAPI5 engine")]
+[id(8)] void SapiUnload (void) ;
+		[helpstring("Say a string using SAPI")]
+[id(9)] VARIANT_BOOL SapiSayString ([in] BSTR stringToSpeak, [in, defaultvalue(1)] VARIANT_BOOL interrupt) ;
+		[helpstring("Say an SSML  fragment using SAPI")]
+[id(10)] VARIANT_BOOL SapiSaySSML  ([in] BSTR ssmlToSpeak, [in, defaultvalue(1)] VARIANT_BOOL interrupt) ;
+		[helpstring("Get current SAPI rate between 0 and 100.")]
+[id(11)] int SapiGetRate (void) ;
+		[helpstring("Set SAPI rate between 0 and 100.")]
+[id(12)] void SapiSetRate ([in] int rate) ;
+		[helpstring("Get current SAPI volume between 0 and 100.")]
+[id(13)] int SapiGetVolume  (void) ;
+		[helpstring("Set SAPI volume between 0 and 100.")]
+[id(14)] void SapiSetVolume ([in] int volume) ;
+		[helpstring("Tells if SAPI5 is paused or not")]
+[id(15)] VARIANT_BOOL SapiIsPaused (void);
+		[helpstring("Pause or resume SAPI speech.")]
+[id(16)] void SapiSetPaused ([in] VARIANT_BOOL paused);
+		[helpstring("Tells if SAPI is currently speaking or not.")]
+[id(17)] VARIANT_BOOL SapiIsSpeaking(void);
+		[helpstring("Wait up to specified number of milliseconds for the speech to complete.")]
+[id(18)] VARIANT_BOOL SapiWait([in, defaultvalue(-1)] int timeout);
+		[helpstring("Get the 0-based index of the currently speaking voice.")]
+[id(19)] int SapiGetVoice(void);
+		[helpstring("Set the currently speaking voice as 0-based index.")]
+[id(20)] void SapiSetVoice([in] int index);
+		[helpstring("Return the number of available SAPI voices.")]
+[id(21)] int SapiGetNumVoices(void);
+		[helpstring("Get the name of the specified 0-based index voice.")]
+[id(22)] BSTR SapiGetVoiceName([in] int index);
+		[helpstring("Tells SAPI to immediately stop speaking.")]
+[id(23)] void SapiStopSpeech (void);
+		[helpstring("Tell which screen reader is currently used.")]
+[id(24)] BSTR GetCurrentScreenReaderName(void);
+		[helpstring("Force to use a particular screen reader.")]
+[id(25)] VARIANT_BOOL SetCurrentScreenReaderName([in] BSTR name);
+		[helpstring("Return the name corresponding to a particular screen reader ID.")]
+[id(26)] BSTR GetScreenReaderName([in] int id);
+		[helpstring("Return the ID corresponding to a particular screen reader name.")]
+[id(27)] int GetScreenReaderId([in] BSTR name);
+		[helpstring("Install a keyboard hook.")]
+[id(28)] VARIANT_BOOL InstallKeyboardHook (void);
+		[helpstring("Uninstall a keyboard hook.")]
+[id(29)] void UninstallKeyboardHook (void);
+		[helpstring("Show a message on the braille display")]
+[id(30)] VARIANT_BOOL BrailleMessage([in] BSTR str);
+		[helpstring("Get the number of screen readers supported by the library.")]
+[id(31)] int GetSupportedScreenReadersCount(void);
+	};
+
+	[uuid(06C98751-54F6-433D-A751-D180789A854D), helpstring("Screen reader API object."), appobject]
+	coclass IScreenReaderApi
+	{
+		[default] interface IScreenReaderApiVTbl;
+	}
+}
+
